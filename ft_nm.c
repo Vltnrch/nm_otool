@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:46:44 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/07 16:03:11 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/07 16:15:45 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static void	ft_nm_init(t_nm *nm)
 
 static int	ft_nm_error(char *prog, char *file, char *func)
 {
-	ft_dprintf(2, "%s: %s: %s failed\n", prog, file, func);
+	ft_dprintf(2, "%s: %s: %s failed.\n", prog, file, func);
 	return (EXIT_FAILURE);
 }
 
-static int	ft_nm(char *prog, char *file)
+static int	ft_nm(char *prog, char *file, int w)
 {
 	t_nm		nm;
 	struct stat	buf;
@@ -63,6 +63,8 @@ static int	ft_nm(char *prog, char *file)
 	if ((nm.ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) \
 				== MAP_FAILED)
 		return (ft_nm_error(prog, file, "mmap"));
+	if (w)
+		ft_printf("\n%s:\n", file);
 	nm_magicnumber(&nm);
 	if (munmap(nm.ptr, buf.st_size) < 0)
 		return (ft_nm_error(prog, file, "munmap"));
@@ -77,13 +79,9 @@ int			main(int ac, char **av)
 	int	r;
 
 	if (ac == 1)
-		r = ft_nm(av[0], "a.out");
+		r = ft_nm(av[0], "a.out", 0);
 	i = 1;
 	while (av[i])
-	{
-		ft_printf("\n%s:\n", av[i]);
-		if ((r = ft_nm(av[0], av[i])) == EXIT_FAILURE)
-			return (r);
-	}
+		r = ft_nm(av[0], av[i++], 1);
 	return (r);
 }
