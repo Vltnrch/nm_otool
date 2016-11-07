@@ -6,15 +6,15 @@
 #    By: vroche <vroche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/16 10:49:38 by vroche            #+#    #+#              #
-#    Updated: 2016/11/01 12:33:32 by vroche           ###   ########.fr        #
+#    Updated: 2016/11/07 14:14:01 by vroche           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = nm_otool
 
-NAME_NM = nm
+NAME_NM = ft_nm
 
-NAME_OTOOL = otool
+NAME_OTOOL = ft_otool
 
 LIB = -L./libft -lft
 
@@ -22,7 +22,12 @@ HDR = -I./libft/includes -I.
 
 FLAGS = -Wall -Wextra -Werror -g
 
-C_NM = nm.c
+C_NM =	ft_list.c \
+		ft_nm.c \
+		nm_32.c \
+		nm_64.c \
+		nm_fat.c \
+		nm_print.c
 
 O_NM = $(C_NM:.c=.o)
 
