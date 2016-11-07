@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:03:57 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/07 15:28:19 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/07 16:25:19 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static char	nm_print_32_char(t_nm *nm, struct nlist *el)
 {
+	if (el->n_type & N_STAB)
+		return ('-');
 	if ((el->n_type & N_TYPE) == N_UNDF)
 		return ((el->n_value != 0) ? 'c' : 'u');
 	else if ((el->n_type & N_TYPE) == N_PBUD)
@@ -58,6 +60,8 @@ void		nm_print_32(t_nm *nm, char *stringtable)
 
 static char	nm_print_64_char(t_nm *nm, struct nlist_64 *el)
 {
+	if (el->n_type & N_STAB)
+		return ('-');
 	if ((el->n_type & N_TYPE) == N_UNDF)
 		return ((el->n_value != 0) ? 'c' : 'u');
 	else if ((el->n_type & N_TYPE) == N_PBUD)
