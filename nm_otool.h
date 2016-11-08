@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:50:18 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 14:33:07 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/08 16:33:28 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 typedef struct			s_nm
 {
 	char				*ptr;
+	char				*file;
 	int					text_nsect;
 	int					data_nsect;
 	int					bss_nsect;
@@ -58,5 +59,11 @@ void					handle_fat(t_nm *nm, int swap);
 
 void					nm_print_32(t_nm *nm, char *stringtable);
 void					nm_print_64(t_nm *nm, char *stringtable);
+
+void 					otool_32(t_nm *otool, int swap);
+
+void 					otool_64(t_nm *otool, int swap);
+
+void 					otool_fat(t_nm *otool, int swap);
 
 #endif

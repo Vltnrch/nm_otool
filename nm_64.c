@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:48:53 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/07 17:26:22 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/08 15:01:41 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ static void	handle_64_count_part(t_nm *nm, struct load_command *lc, int *count)
 	i = 0;
 	while (i < sc64->nsects)
 	{
-		if (ft_strcmp((s64 + i)->sectname, SECT_TEXT) == 0 && \
-			ft_strcmp((s64 + i)->segname, SEG_TEXT) == 0)
+		if (ft_strcmp(s64[i].sectname, SECT_TEXT) == 0 && \
+			ft_strcmp(s64[i].segname, SEG_TEXT) == 0)
 			nm->text_nsect = *count + 1;
-		else if (ft_strcmp((s64 + i)->sectname, SECT_DATA) == 0 && \
-			ft_strcmp((s64 + i)->segname, SEG_DATA) == 0)
+		else if (ft_strcmp(s64[i].sectname, SECT_DATA) == 0 && \
+			ft_strcmp(s64[i].segname, SEG_DATA) == 0)
 			nm->data_nsect = *count + 1;
-		else if (ft_strcmp((s64 + i)->sectname, SECT_BSS) == 0 && \
-			ft_strcmp((s64 + i)->segname, SEG_DATA) == 0)
+		else if (ft_strcmp(s64[i].sectname, SECT_BSS) == 0 && \
+			ft_strcmp(s64[i].segname, SEG_DATA) == 0)
 			nm->bss_nsect = *count + 1;
 		i++;
 		(*count)++;

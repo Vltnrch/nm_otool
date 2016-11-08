@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:48:06 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/07 17:26:18 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/08 15:01:54 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static void	handle_32_count_part(t_nm *nm, struct load_command *lc, int *count)
 	i = 0;
 	while (i < sc->nsects)
 	{
-		if (ft_strcmp((s + i)->sectname, SECT_TEXT) == 0 && \
-			ft_strcmp((s + i)->segname, SEG_TEXT) == 0)
+		if (ft_strcmp(s[i].sectname, SECT_TEXT) == 0 && \
+			ft_strcmp(s[i].segname, SEG_TEXT) == 0)
 			nm->text_nsect = *count + 1;
-		else if (ft_strcmp((s + i)->sectname, SECT_DATA) == 0 && \
-				ft_strcmp((s + i)->segname, SEG_DATA) == 0)
+		else if (ft_strcmp(s[i].sectname, SECT_DATA) == 0 && \
+				ft_strcmp(s[i].segname, SEG_DATA) == 0)
 			nm->data_nsect = *count + 1;
-		else if (ft_strcmp((s + i)->sectname, SECT_BSS) == 0 && \
-				ft_strcmp((s + i)->segname, SEG_DATA) == 0)
+		else if (ft_strcmp(s[i].sectname, SECT_BSS) == 0 && \
+				ft_strcmp(s[i].segname, SEG_DATA) == 0)
 			nm->bss_nsect = *count + 1;
 		i++;
 		(*count)++;
