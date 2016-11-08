@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:46:44 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/07 16:15:45 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/08 14:32:41 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 static void	nm_magicnumber(t_nm *nm)
 {
-	unsigned int	magic_number;
+	struct mach_header		*header;
 
-	magic_number = *(int *)nm->ptr;
-	if (magic_number == MH_MAGIC_64)
+	header = (struct mach_header *)nm->ptr;
+	if (header->magic == MH_MAGIC_64)
 		handle_64(nm, 0);
-	else if (magic_number == MH_CIGAM_64)
+	else if (header->magic == MH_CIGAM_64)
 		handle_64(nm, 1);
-	else if (magic_number == MH_MAGIC)
+	else if (header->magic == MH_MAGIC)
 		handle_32(nm, 0);
-	else if (magic_number == MH_CIGAM)
+	else if (header->magic == MH_CIGAM)
 		handle_32(nm, 1);
-	else if (magic_number == FAT_MAGIC)
+	else if (header->magic == FAT_MAGIC)
 		handle_fat(nm, 0);
-	else if (magic_number == FAT_CIGAM)
+	else if (header->magic == FAT_CIGAM)
 		handle_fat(nm, 1);
-	else
-		ft_printf("JE CONNAIS PAS CE FORMAT MON GROS : %x\n", magic_number);
+	/*else
+		ft_printf("JE CONNAIS PAS CE FORMAT MON GROS : %x\n", header->magic);*/
 }
 
 static void	ft_nm_init(t_nm *nm)
@@ -82,6 +82,6 @@ int			main(int ac, char **av)
 		r = ft_nm(av[0], "a.out", 0);
 	i = 1;
 	while (av[i])
-		r = ft_nm(av[0], av[i++], 1);
+		r = ft_nm(av[0], av[i++], ac > 2);
 	return (r);
 }

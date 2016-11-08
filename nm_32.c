@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:48:06 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/07 15:27:44 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/07 17:26:18 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	parse_32(t_nm *nm, struct symtab_command *sym, int swap)
 	i = 0;
 	while (i < nsyms)
 	{
-		if (array[i].n_type <= 0x0f)
+		if (!(array[i].n_type & N_STAB))
 			ft_add_nlist(&(nm->nmlist), &array[i], stringtable);
 		i++;
 	}
