@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:46:44 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 14:32:41 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/08 17:57:27 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void	nm_magicnumber(t_nm *nm)
 		handle_fat(nm, 0);
 	else if (header->magic == FAT_CIGAM)
 		handle_fat(nm, 1);
+	else if (!ft_strncmp((char *)nm->ptr, ARMAG, SARMAG))
+		handle_ar(nm);
 	/*else
 		ft_printf("JE CONNAIS PAS CE FORMAT MON GROS : %x\n", header->magic);*/
 }

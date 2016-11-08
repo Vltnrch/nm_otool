@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:50:18 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 16:33:28 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/08 17:55:09 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <mach-o/nlist.h>
 # include <mach-o/loader.h>
 # include <mach-o/fat.h>
+# include <mach-o/ranlib.h>
+# include <ar.h>
 # include <fcntl.h>
 # include <sys/stat.h>
 # include "libft.h"
@@ -54,6 +56,8 @@ void					ft_add_nlist(t_nmlist **nm, \
 void					handle_64(t_nm *nm, int swap);
 
 void					handle_32(t_nm *nm, int swap);
+
+void					handle_ar(t_nm *nm);
 
 void					handle_fat(t_nm *nm, int swap);
 
