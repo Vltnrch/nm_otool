@@ -6,16 +6,16 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:54:27 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 12:10:28 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/08 14:52:01 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm_otool.h"
 
-static int handle_fat_magic(t_nm *nm, struct fat_arch *arch, int swap)
+static int	handle_fat_magic(t_nm *nm, struct fat_arch *arch, int swap)
 {
-	unsigned int			magic_number;
-	
+	unsigned int	magic_number;
+
 	magic_number = *(int *)((void *)nm->ptr + \
 				(swap ? OSSwapConstInt32(arch->offset) : arch->offset));
 	if (magic_number == MH_MAGIC_64)

@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:03:57 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 14:39:20 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/08 14:52:38 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ void		nm_print_32(t_nm *nm, char *stringtable)
 	nmlist = nm->nmlist;
 	while (nmlist)
 	{
-		if (nmlist->el->n_value || ((nmlist->el->n_type & N_TYPE) == N_SECT && nmlist->el->n_sect == nm->text_nsect))
+		if (nmlist->el->n_value || \
+			((nmlist->el->n_type & N_TYPE) == N_SECT && \
+				nmlist->el->n_sect == nm->text_nsect))
 			ft_printf("%08x ", nmlist->el->n_value);
 		else
 			ft_printf("%8s ", " ");
@@ -88,7 +90,9 @@ void		nm_print_64(t_nm *nm, char *stringtable)
 	nmlist = nm->nmlist_64;
 	while (nmlist)
 	{
-		if (nmlist->el->n_value || ((nmlist->el->n_type & N_TYPE) == N_SECT && nmlist->el->n_sect == nm->text_nsect))
+		if (nmlist->el->n_value || \
+			((nmlist->el->n_type & N_TYPE) == N_SECT && \
+				nmlist->el->n_sect == nm->text_nsect))
 			ft_printf("%016llx ", nmlist->el->n_value);
 		else
 			ft_printf("%16s ", " ");
