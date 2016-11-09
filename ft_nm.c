@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:46:44 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 17:57:27 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/09 17:24:17 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static void	ft_nm_init(t_nm *nm)
 	nm->bss_nsect = NO_SECT;
 	nm->nmlist = NULL;
 	nm->nmlist_64 = NULL;
+	nm->nmlist_ar = NULL;
+	nm->is_fat = 0;
 }
 
 static int	ft_nm_error(char *prog, char *file, char *func)
@@ -65,6 +67,7 @@ static int	ft_nm(char *prog, char *file, int w)
 	if ((nm.ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) \
 				== MAP_FAILED)
 		return (ft_nm_error(prog, file, "mmap"));
+	nm.file = file;
 	if (w)
 		ft_printf("\n%s:\n", file);
 	nm_magicnumber(&nm);

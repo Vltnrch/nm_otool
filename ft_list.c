@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:04:21 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/07 15:25:32 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/09 16:35:25 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ void		ft_add_nlist_64(t_nmlist_64 **nm, struct nlist_64 *el, char *st)
 		prev = tmp;
 		tmp = tmp->next;
 	}
+	if (tmp && !ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) && el->n_value && tmp->el->n_value)
+	{
+		while (tmp && \
+		!ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) && el->n_value > tmp->el->n_value)
+		{
+			prev = tmp;
+			tmp = tmp->next;
+		}
+	}
 	ft_add_nlist_64_end(nm, prev, new, tmp);
 }
 
@@ -85,5 +94,64 @@ void		ft_add_nlist(t_nmlist **nm, struct nlist *el, char *st)
 		prev = tmp;
 		tmp = tmp->next;
 	}
+	if (tmp && !ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) && el->n_value && tmp->el->n_value)
+	{
+		while (tmp && \
+		!ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) && el->n_value > tmp->el->n_value)
+		{
+			prev = tmp;
+			tmp = tmp->next;
+		}
+	}
 	ft_add_nlist_end(nm, prev, new, tmp);
+}
+
+static void	ft_add_nlist_ar_end(t_nmlist_ar **nm, t_nmlist_ar *prev, \
+							t_nmlist_ar *new, t_nmlist_ar *tmp)
+{
+	if (tmp == *nm)
+	{
+		*nm = new;
+		new->next = tmp;
+	}
+	else if (!tmp)
+		prev->next = new;
+	else
+	{
+		prev->next = new;
+		new->next = tmp;
+	}
+}
+
+static int	check_ar_exist(t_nmlist_ar *nmlist_ar, struct ranlib *el, char *start)
+{
+	while (nmlist_ar)
+	{
+		if (!ft_strcmp(start + nmlist_ar->el->ran_off + sizeof(struct ar_hdr), start + el->ran_off + sizeof(struct ar_hdr)))
+			return (1);
+		nmlist_ar = nmlist_ar->next;
+	}
+	return (0);
+}
+
+void		ft_add_nlist_ar(t_nmlist_ar **nm, struct ranlib *el, char *start)
+{
+	t_nmlist_ar	*prev;
+	t_nmlist_ar	*tmp;
+	t_nmlist_ar	*new;
+
+	if (check_ar_exist(*nm, el, start))
+		return ;
+	if (!(new = (t_nmlist_ar *)malloc(sizeof(t_nmlist_ar))))
+		return ;
+	new->el = el;
+	new->next = NULL;
+	tmp = *nm;
+	prev = tmp;
+	while (tmp && tmp->el->ran_off < el->ran_off)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	ft_add_nlist_ar_end(nm, prev, new, tmp);
 }

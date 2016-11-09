@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:50:18 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 17:55:09 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/09 17:23:21 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ typedef struct			s_nm
 {
 	char				*ptr;
 	char				*file;
+	int					is_fat;
 	int					text_nsect;
 	int					data_nsect;
 	int					bss_nsect;
 	struct s_nmlist		*nmlist;
 	struct s_nmlist_64	*nmlist_64;
+	struct s_nmlist_ar	*nmlist_ar;
 }						t_nm;
 
 typedef struct			s_nmlist_64
@@ -48,10 +50,18 @@ typedef struct			s_nmlist
 	struct s_nmlist		*next;
 }						t_nmlist;
 
+typedef struct			s_nmlist_ar
+{
+	struct ranlib		*el;
+	struct s_nmlist_ar	*next;
+}						t_nmlist_ar;
+
 void					ft_add_nlist_64(t_nmlist_64 **nm, \
 							struct nlist_64 *el, char *stringtable);
 void					ft_add_nlist(t_nmlist **nm, \
 							struct nlist *el, char *stringtable);
+
+void					ft_add_nlist_ar(t_nmlist_ar **nm, struct ranlib *el, char *start);
 
 void					handle_64(t_nm *nm, int swap);
 
