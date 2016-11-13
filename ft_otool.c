@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:46:44 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 16:35:15 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/13 18:05:49 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ static void	otool_magicnumber(t_nm *otool)
 		otool_fat(otool, 0);
 	else if (header->magic == FAT_CIGAM)
 		otool_fat(otool, 1);
-	/*else
-		ft_printf("JE CONNAIS PAS CE FORMAT MON GROS : %x\n", header->magic);*/
+	else if (!ft_strncmp((char *)otool->ptr, ARMAG, SARMAG))
+		otool_ar(otool);
+	else
+		ft_printf("%s: is not an object file\n", otool->file);
 }
 
 static void	ft_otool_init(t_nm *otool)
@@ -41,6 +43,9 @@ static void	ft_otool_init(t_nm *otool)
 	otool->bss_nsect = NO_SECT;
 	otool->nmlist = NULL;
 	otool->nmlist_64 = NULL;
+	otool->nmlist_ar = NULL;
+	otool->is_fat = 0;
+	otool->is_ar = 0;
 }
 
 static int	ft_otool_error(char *prog, char *file, char *func)

@@ -6,7 +6,7 @@
 #    By: vroche <vroche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/16 10:49:38 by vroche            #+#    #+#              #
-#    Updated: 2016/11/08 17:55:34 by vroche           ###   ########.fr        #
+#    Updated: 2016/11/13 17:54:16 by vroche           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,11 @@ C_NM =	ft_list.c \
 
 O_NM = $(C_NM:.c=.o)
 
-C_OTOOL =	ft_otool.c \
+C_OTOOL =	ft_list.c \
+			ft_otool.c \
 			otool_32.c \
 			otool_64.c \
+			otool_ar.c \
 			otool_fat.c
 
 O_OTOOL = $(C_OTOOL:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:46:44 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/09 17:24:17 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/13 18:00:09 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	ft_nm_init(t_nm *nm)
 	nm->nmlist_64 = NULL;
 	nm->nmlist_ar = NULL;
 	nm->is_fat = 0;
+	nm->is_ar = 0;
 }
 
 static int	ft_nm_error(char *prog, char *file, char *func)

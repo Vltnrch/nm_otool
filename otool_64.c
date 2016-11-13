@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 16:25:33 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 16:34:04 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/13 18:11:56 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ static void	otool_64_print(t_nm *otool, struct section_64 *s64)
 
 	addr = (char *)s64->addr;
 	offset = s64->offset;
-	ft_printf("%s:\n", otool->file);
-	ft_printf("Contents of (__TEXT,__text) section\n");
 	while (addr < ((char *)s64->addr + s64->size))
 	{
-		ft_printf("%016llx	", addr);
+		ft_printf("%016llx ", addr);
 		i = 0;
 		while (addr < ((char *)s64->addr + s64->size) && i++ < 16)
 		{
@@ -66,6 +64,9 @@ void 		otool_64(t_nm *otool, int swap)
 	ncmds = swap ? OSSwapConstInt32(header->ncmds) : header->ncmds;
 	i = 0;
 	lc = (void *)otool->ptr + sizeof(struct mach_header_64);
+	if (!otool->is_ar)
+		ft_printf("%s:\n", otool->file);
+	ft_printf("(__TEXT,__text) section\n");
 	while (i < ncmds)
 	{
 		if ((lc->cmd == LC_SEGMENT_64 && !swap) || \
