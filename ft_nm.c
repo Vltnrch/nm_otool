@@ -31,8 +31,6 @@ static void	nm_magicnumber(t_nm *nm)
 		handle_fat(nm, 1);
 	else if (!ft_strncmp((char *)nm->ptr, ARMAG, SARMAG))
 		handle_ar(nm);
-	/*else
-		ft_printf("JE CONNAIS PAS CE FORMAT MON GROS : %x\n", header->magic);*/
 }
 
 static void	ft_nm_init(t_nm *nm)

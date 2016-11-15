@@ -31,8 +31,6 @@ static void	otool_magicnumber(t_nm *otool)
 		otool_fat(otool, 1);
 	else if (!ft_strncmp((char *)otool->ptr, ARMAG, SARMAG))
 		otool_ar(otool);
-	/*else
-		ft_printf("%s: is not an object file\n", otool->file);*/
 }
 
 static void	ft_otool_init(t_nm *otool)
