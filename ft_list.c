@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:04:21 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/13 16:55:45 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/15 13:44:21 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	ft_add_nlist_64_end(t_nmlist_64 **nm, t_nmlist_64 *prev, \
 	}
 }
 
-void		ft_add_nlist_64(t_nmlist_64 **nm, struct nlist_64 *el, char *st)
+void		ft_add_nlist_64(t_nmlist_64 **nm, struct nlist_64 *el, char *st, int swap)
 {
 	t_nmlist_64	*prev;
 	t_nmlist_64	*tmp;
@@ -42,20 +42,20 @@ void		ft_add_nlist_64(t_nmlist_64 **nm, struct nlist_64 *el, char *st)
 	tmp = *nm;
 	prev = tmp;
 	while (tmp && \
-		ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) < 0)
+		ft_strcmp(st + (swap ? OSSwapConstInt32(tmp->el->n_un.n_strx) : tmp->el->n_un.n_strx), st + (swap ? OSSwapConstInt32(el->n_un.n_strx) : el->n_un.n_strx)) < 0)
 	{
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	/*if (tmp && !ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) && el->n_value && tmp->el->n_value)
+	if (tmp && !ft_strcmp(st + (swap ? OSSwapConstInt32(tmp->el->n_un.n_strx) : tmp->el->n_un.n_strx), st + (swap ? OSSwapConstInt32(el->n_un.n_strx) : el->n_un.n_strx)) && el->n_value && tmp->el->n_value)
 	{
 		while (tmp && \
-		!ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) && el->n_value > tmp->el->n_value)
+		!ft_strcmp(st + (swap ? OSSwapConstInt32(tmp->el->n_un.n_strx) : tmp->el->n_un.n_strx), st + (swap ? OSSwapConstInt32(el->n_un.n_strx) : el->n_un.n_strx)) && el->n_value > tmp->el->n_value)
 		{
 			prev = tmp;
 			tmp = tmp->next;
 		}
-	}*/
+	}
 	ft_add_nlist_64_end(nm, prev, new, tmp);
 }
 
@@ -76,7 +76,7 @@ static void	ft_add_nlist_end(t_nmlist **nm, t_nmlist *prev, \
 	}
 }
 
-void		ft_add_nlist(t_nmlist **nm, struct nlist *el, char *st)
+void		ft_add_nlist(t_nmlist **nm, struct nlist *el, char *st, int swap)
 {
 	t_nmlist	*prev;
 	t_nmlist	*tmp;
@@ -89,20 +89,20 @@ void		ft_add_nlist(t_nmlist **nm, struct nlist *el, char *st)
 	tmp = *nm;
 	prev = tmp;
 	while (tmp && \
-		ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) < 0)
+		ft_strcmp(st + (swap ? OSSwapConstInt32(tmp->el->n_un.n_strx) : tmp->el->n_un.n_strx), st + (swap ? OSSwapConstInt32(el->n_un.n_strx) : el->n_un.n_strx)) < 0)
 	{
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	/*if (tmp && !ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) && el->n_value && tmp->el->n_value)
+	if (tmp && !ft_strcmp(st + (swap ? OSSwapConstInt32(tmp->el->n_un.n_strx) : tmp->el->n_un.n_strx), st + (swap ? OSSwapConstInt32(el->n_un.n_strx) : el->n_un.n_strx)) && el->n_value && tmp->el->n_value)
 	{
 		while (tmp && \
-		!ft_strcmp(st + tmp->el->n_un.n_strx, st + el->n_un.n_strx) && el->n_value > tmp->el->n_value)
+		!ft_strcmp(st + (swap ? OSSwapConstInt32(tmp->el->n_un.n_strx) : tmp->el->n_un.n_strx), st + (swap ? OSSwapConstInt32(el->n_un.n_strx) : el->n_un.n_strx)) && el->n_value > tmp->el->n_value)
 		{
 			prev = tmp;
 			tmp = tmp->next;
 		}
-	}*/
+	}
 	ft_add_nlist_end(nm, prev, new, tmp);
 }
 

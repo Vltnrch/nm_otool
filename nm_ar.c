@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 17:44:41 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/09 17:37:08 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/15 13:22:07 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void dump_symdefs(t_nm *nm, struct ar_hdr* header, size_t offset, void* f
 			handle_32(nm, 0);
 		}
 		else if (magic_number == MH_CIGAM && !nm->is_fat)
-		{		
+		{
 			ft_printf("\n%s(%s):\n", nm->file, (file_start + ranlib->ran_off) + sizeof(struct ar_hdr));
 			handle_32(nm, 1);
 		}

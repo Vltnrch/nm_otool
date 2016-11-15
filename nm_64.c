@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:48:53 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 15:01:41 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/15 13:46:31 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,25 @@ static void	parse_64(t_nm *nm, struct symtab_command *sym, int swap)
 	while (i < nsyms)
 	{
 		if (!(array[i].n_type & N_STAB))
-			ft_add_nlist_64(&(nm->nmlist_64), &array[i], stringtable);
+			ft_add_nlist_64(&(nm->nmlist_64), &array[i], stringtable, swap);
 		i++;
 	}
-	nm_print_64(nm, stringtable);
+	nm_print_64(nm, stringtable, swap);
 }
 
-static void	handle_64_count_part(t_nm *nm, struct load_command *lc, int *count)
+static void	handle_64_count_part(t_nm *nm, struct load_command *lc, int *count, int swap)
 {
 	struct section_64			*s64;
 	struct segment_command_64	*sc64;
-	unsigned int				i;
+	int							i;
+	int							nsects;
 
 	sc64 = (struct segment_command_64 *)lc;
 	s64 = (struct section_64 *)((void *)sc64 + \
 								sizeof(struct segment_command_64));
+	nsects = swap ? OSSwapConstInt32(sc64->nsects) : sc64->nsects;
 	i = 0;
-	while (i < sc64->nsects)
+	while (i < nsects)
 	{
 		if (ft_strcmp(s64[i].sectname, SECT_TEXT) == 0 && \
 			ft_strcmp(s64[i].segname, SEG_TEXT) == 0)
@@ -77,7 +79,7 @@ static void	handle_64_count(t_nm *nm, int swap)
 	{
 		if ((lc->cmd == LC_SEGMENT_64 && !swap) || \
 			(OSSwapConstInt32(lc->cmd) == LC_SEGMENT_64 && swap))
-			handle_64_count_part(nm, lc, &count);
+			handle_64_count_part(nm, lc, &count, swap);
 		lc = (void *)lc + (swap ? OSSwapConstInt32(lc->cmdsize) : lc->cmdsize);
 		i++;
 	}

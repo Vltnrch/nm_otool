@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:48:06 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/08 15:01:54 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/15 13:47:52 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,24 @@ static void	parse_32(t_nm *nm, struct symtab_command *sym, int swap)
 	while (i < nsyms)
 	{
 		if (!(array[i].n_type & N_STAB))
-			ft_add_nlist(&(nm->nmlist), &array[i], stringtable);
+			ft_add_nlist(&(nm->nmlist), &array[i], stringtable, swap);
 		i++;
 	}
-	nm_print_32(nm, stringtable);
+	nm_print_32(nm, stringtable, swap);
 }
 
-static void	handle_32_count_part(t_nm *nm, struct load_command *lc, int *count)
+static void	handle_32_count_part(t_nm *nm, struct load_command *lc, int *count, int swap)
 {
 	struct section			*s;
 	struct segment_command	*sc;
-	unsigned int			i;
+	int						i;
+	int						nsects;
 
 	sc = (struct segment_command *)lc;
 	s = (struct section *)((void *)sc + sizeof(struct segment_command));
+	nsects = swap ? OSSwapConstInt32(sc->nsects) : sc->nsects;
 	i = 0;
-	while (i < sc->nsects)
+	while (i < nsects)
 	{
 		if (ft_strcmp(s[i].sectname, SECT_TEXT) == 0 && \
 			ft_strcmp(s[i].segname, SEG_TEXT) == 0)
@@ -76,7 +78,7 @@ static void	handle_32_count(t_nm *nm, int swap)
 	{
 		if ((lc->cmd == LC_SEGMENT && !swap) || \
 			(OSSwapConstInt32(lc->cmd) == LC_SEGMENT && swap))
-			handle_32_count_part(nm, lc, &count);
+			handle_32_count_part(nm, lc, &count, swap);
 		lc = (void *)lc + (swap ? OSSwapConstInt32(lc->cmdsize) : lc->cmdsize);
 		i++;
 	}

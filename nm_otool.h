@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:50:18 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/13 17:59:54 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/15 13:46:44 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ typedef struct			s_nmlist_ar
 }						t_nmlist_ar;
 
 void					ft_add_nlist_64(t_nmlist_64 **nm, \
-							struct nlist_64 *el, char *stringtable);
+							struct nlist_64 *el, char *stringtable, int swap);
 void					ft_add_nlist(t_nmlist **nm, \
-							struct nlist *el, char *stringtable);
+							struct nlist *el, char *stringtable, int swap);
 
 void					ft_add_nlist_ar(t_nmlist_ar **nm, struct ranlib *el, char *start);
 
@@ -72,8 +72,8 @@ void					handle_ar(t_nm *nm);
 
 void					handle_fat(t_nm *nm, int swap);
 
-void					nm_print_32(t_nm *nm, char *stringtable);
-void					nm_print_64(t_nm *nm, char *stringtable);
+void					nm_print_32(t_nm *nm, char *stringtable, int swap);
+void					nm_print_64(t_nm *nm, char *stringtable, int swap);
 
 void 					otool_32(t_nm *otool, int swap);
 
