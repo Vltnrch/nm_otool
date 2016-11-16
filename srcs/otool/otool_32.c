@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 16:23:42 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/15 14:43:29 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/16 17:08:57 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ static void	otool_32_part(t_nm *otool, struct load_command *lc)
 	}
 }
 
-
-void 		otool_32(t_nm *otool, int swap)
+void		otool_32(t_nm *otool, int swap)
 {
 	int						ncmds;
 	int						i;

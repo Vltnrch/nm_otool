@@ -6,7 +6,7 @@
 #    By: vroche <vroche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/16 10:49:38 by vroche            #+#    #+#              #
-#    Updated: 2016/11/13 17:54:16 by vroche           ###   ########.fr        #
+#    Updated: 2016/11/16 17:41:33 by vroche           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,47 +18,49 @@ NAME_OTOOL = ft_otool
 
 LIB = -L./libft -lft
 
-HDR = -I./libft/includes -I.
+HDR = -I./libft/includes -I./includes
 
 FLAGS = -Wall -Wextra -Werror -g
 
-C_NM =	ft_list.c \
-		ft_nm.c \
-		nm_32.c \
-		nm_64.c \
-		nm_ar.c \
-		nm_fat.c \
-		nm_print.c
+C_NM =	srcs/nm/ft_nm.c \
+		srcs/nm/nm_32.c \
+		srcs/nm/nm_64.c \
+		srcs/nm/nm_ar.c \
+		srcs/nm/nm_fat.c \
+		srcs/nm/nm_print.c
 
 O_NM = $(C_NM:.c=.o)
 
-C_OTOOL =	ft_list.c \
-			ft_otool.c \
-			otool_32.c \
-			otool_64.c \
-			otool_ar.c \
-			otool_fat.c
+C_OTOOL =	srcs/otool/ft_otool.c \
+			srcs/otool/otool_32.c \
+			srcs/otool/otool_64.c \
+			srcs/otool/otool_ar.c \
+			srcs/otool/otool_fat.c
 
 O_OTOOL = $(C_OTOOL:.c=.o)
 
-C = $(C_NM) $(C_OTOOL)
+C_COMMON =	srcs/common/nm_otool_list_32.c \
+			srcs/common/nm_otool_list_64.c \
+			srcs/common/nm_otool_list_ar.c
 
-O = $(O_NM) $(O_OTOOL)
+O_COMMON = $(C_COMMON:.c=.o)
+
+C = $(C_NM) $(C_OTOOL) $(C_COMMON)
+
+O = $(O_NM) $(O_OTOOL) $(O_COMMON)
 
 all: $(NAME)
 
-$(NAME): $(NAME_NM) $(NAME_OTOOL)
+$(NAME): libft $(NAME_NM) $(NAME_OTOOL)
 
-$(NAME_NM): $(O_NM)
-	make -C ./libft
-	clang $(FLAGS) $(HDR) $(LIB) $(O_NM) -o $(NAME_NM)
+$(NAME_NM): libft $(O_COMMON) $(O_NM) 
+	clang $(FLAGS) $(HDR) $(LIB) $(O_NM) $(O_COMMON) -o $(NAME_NM)
 
-$(NAME_OTOOL): $(O_OTOOL)
-	make -C ./libft
-	clang $(FLAGS) $(HDR) $(LIB) $(O_OTOOL) -o $(NAME_OTOOL)
+$(NAME_OTOOL): libft $(O_COMMON) $(O_OTOOL)
+	clang $(FLAGS) $(HDR) $(LIB) $(O_OTOOL) $(O_COMMON) -o $(NAME_OTOOL)
 
 %.o:%.c
-	clang $(FLAGS) $(HDR) -c $<
+	clang $(FLAGS) $(HDR) -c $< -o $@
 
 clean:
 	make -C ./libft clean
@@ -69,5 +71,8 @@ fclean: clean
 	rm -f $(NAME_NM) $(NAME_OTOOL)
 
 re: fclean all
+
+libft:
+	make -C ./libft
 
 .PHONY: all clean fclean re libft

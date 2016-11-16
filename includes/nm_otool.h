@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 11:50:18 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/15 13:46:44 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/16 17:08:56 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,26 @@ void					ft_add_nlist_64(t_nmlist_64 **nm, \
 void					ft_add_nlist(t_nmlist **nm, \
 							struct nlist *el, char *stringtable, int swap);
 
-void					ft_add_nlist_ar(t_nmlist_ar **nm, struct ranlib *el, char *start);
+void					ft_add_nlist_ar(t_nmlist_ar **nm, struct ranlib *el, \
+										char *start);
 
-void					handle_64(t_nm *nm, int swap);
+void					nm_64(t_nm *nm, int swap);
 
-void					handle_32(t_nm *nm, int swap);
+void					nm_32(t_nm *nm, int swap);
 
-void					handle_ar(t_nm *nm);
+void					nm_ar(t_nm *nm);
 
-void					handle_fat(t_nm *nm, int swap);
+void					nm_fat(t_nm *nm, int swap);
 
 void					nm_print_32(t_nm *nm, char *stringtable, int swap);
 void					nm_print_64(t_nm *nm, char *stringtable, int swap);
 
-void 					otool_32(t_nm *otool, int swap);
+void					otool_32(t_nm *otool, int swap);
 
-void 					otool_64(t_nm *otool, int swap);
+void					otool_64(t_nm *otool, int swap);
 
 void					otool_ar(t_nm *nm);
 
-void 					otool_fat(t_nm *otool, int swap);
+void					otool_fat(t_nm *otool, int swap);
 
 #endif

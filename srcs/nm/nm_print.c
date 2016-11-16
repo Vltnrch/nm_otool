@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:03:57 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/15 13:50:12 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/16 17:08:56 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ void		nm_print_32(t_nm *nm, char *stringtable, int swap)
 		if (nmlist->el->n_value || (nmlist->el->n_type & N_TYPE) == N_ABS || \
 			((nmlist->el->n_type & N_TYPE) == N_SECT && \
 				nmlist->el->n_sect == nm->text_nsect))
-			ft_printf("%08x ", (swap ? OSSwapConstInt32(nmlist->el->n_value) : nmlist->el->n_value));
+			ft_printf("%08x ", (swap ? OSSwapConstInt32(nmlist->el->n_value) \
+									: nmlist->el->n_value));
 		else
 			ft_printf("%8s ", " ");
 		c = nm_print_32_char(nm, nmlist->el);
 		if ((nmlist->el->n_type & N_EXT) && c != '?')
 			c -= 32;
-		/*if ((nmlist->el->n_type & N_TYPE) == N_INDR)
-			ft_printf("%c %s (indirect for %s)\n", c, stringtable + nmlist->el->n_un.n_strx, stringtable + nmlist->el->n_value);
-		else*/
-			ft_printf("%c %s\n", c, stringtable + (swap ? OSSwapConstInt32(nmlist->el->n_un.n_strx) : nmlist->el->n_un.n_strx));
+		ft_printf("%c %s\n", c, stringtable + \
+			(swap ? OSSwapConstInt32(nmlist->el->n_un.n_strx) \
+				: nmlist->el->n_un.n_strx));
 		nmlist = nmlist->next;
 	}
 }
@@ -96,16 +96,16 @@ void		nm_print_64(t_nm *nm, char *stringtable, int swap)
 		if (nmlist->el->n_value || (nmlist->el->n_type & N_TYPE) == N_ABS || \
 			((nmlist->el->n_type & N_TYPE) == N_SECT && \
 				nmlist->el->n_sect == nm->text_nsect))
-			ft_printf("%016llx ", (swap ? OSSwapConstInt32(nmlist->el->n_value) : nmlist->el->n_value));
+			ft_printf("%016llx ", (swap ? \
+				OSSwapConstInt32(nmlist->el->n_value) : nmlist->el->n_value));
 		else
 			ft_printf("%16s ", " ");
 		c = nm_print_64_char(nm, nmlist->el);
 		if ((nmlist->el->n_type & N_EXT) && c != '?')
 			c -= 32;
-		/*if ((nmlist->el->n_type & N_TYPE) == N_INDR)
-			ft_printf("%c %s (indirect for %s)\n", c, stringtable + nmlist->el->n_un.n_strx, stringtable + nmlist->el->n_value);
-		else*/
-			ft_printf("%c %s\n", c, stringtable + (swap ? OSSwapConstInt32(nmlist->el->n_un.n_strx) : nmlist->el->n_un.n_strx));
+		ft_printf("%c %s\n", c, stringtable + \
+			(swap ? OSSwapConstInt32(nmlist->el->n_un.n_strx) \
+				: nmlist->el->n_un.n_strx));
 		nmlist = nmlist->next;
 	}
 }

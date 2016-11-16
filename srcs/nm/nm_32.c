@@ -6,7 +6,7 @@
 /*   By: vroche <vroche@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:48:06 by vroche            #+#    #+#             */
-/*   Updated: 2016/11/15 13:47:52 by vroche           ###   ########.fr       */
+/*   Updated: 2016/11/16 17:08:27 by vroche           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	parse_32(t_nm *nm, struct symtab_command *sym, int swap)
 	nm_print_32(nm, stringtable, swap);
 }
 
-static void	handle_32_count_part(t_nm *nm, struct load_command *lc, int *count, int swap)
+static void	nm_32_count_part(t_nm *nm, struct load_command *lc, \
+								int *count, int swap)
 {
 	struct section			*s;
 	struct segment_command	*sc;
@@ -61,7 +62,7 @@ static void	handle_32_count_part(t_nm *nm, struct load_command *lc, int *count, 
 	}
 }
 
-static void	handle_32_count(t_nm *nm, int swap)
+static void	nm_32_count(t_nm *nm, int swap)
 {
 	int						ncmds;
 	int						i;
@@ -78,13 +79,13 @@ static void	handle_32_count(t_nm *nm, int swap)
 	{
 		if ((lc->cmd == LC_SEGMENT && !swap) || \
 			(OSSwapConstInt32(lc->cmd) == LC_SEGMENT && swap))
-			handle_32_count_part(nm, lc, &count, swap);
+			nm_32_count_part(nm, lc, &count, swap);
 		lc = (void *)lc + (swap ? OSSwapConstInt32(lc->cmdsize) : lc->cmdsize);
 		i++;
 	}
 }
 
-void		handle_32(t_nm *nm, int swap)
+void		nm_32(t_nm *nm, int swap)
 {
 	int						ncmds;
 	int						i;
@@ -92,7 +93,7 @@ void		handle_32(t_nm *nm, int swap)
 	struct load_command		*lc;
 	struct symtab_command	*sym;
 
-	handle_32_count(nm, swap);
+	nm_32_count(nm, swap);
 	header = (struct mach_header *)nm->ptr;
 	ncmds = swap ? OSSwapConstInt32(header->ncmds) : header->ncmds;
 	i = 0;
