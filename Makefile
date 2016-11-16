@@ -6,7 +6,7 @@
 #    By: vroche <vroche@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/16 10:49:38 by vroche            #+#    #+#              #
-#    Updated: 2016/11/16 17:41:33 by vroche           ###   ########.fr        #
+#    Updated: 2016/11/16 17:57:12 by vroche           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,13 +51,15 @@ O = $(O_NM) $(O_OTOOL) $(O_COMMON)
 
 all: $(NAME)
 
-$(NAME): libft $(NAME_NM) $(NAME_OTOOL)
+$(NAME): $(NAME_NM) $(NAME_OTOOL)
 
-$(NAME_NM): libft $(O_COMMON) $(O_NM) 
-	clang $(FLAGS) $(HDR) $(LIB) $(O_NM) $(O_COMMON) -o $(NAME_NM)
+$(NAME_NM): $(O_COMMON) $(O_NM) 
+	@make -C ./libft
+	clang $(FLAGS) $(HDR) $(LIB) $^ -o $@
 
-$(NAME_OTOOL): libft $(O_COMMON) $(O_OTOOL)
-	clang $(FLAGS) $(HDR) $(LIB) $(O_OTOOL) $(O_COMMON) -o $(NAME_OTOOL)
+$(NAME_OTOOL): $(O_COMMON) $(O_OTOOL)
+	@make -C ./libft
+	clang $(FLAGS) $(HDR) $(LIB) $^ -o $@
 
 %.o:%.c
 	clang $(FLAGS) $(HDR) -c $< -o $@
@@ -71,8 +73,5 @@ fclean: clean
 	rm -f $(NAME_NM) $(NAME_OTOOL)
 
 re: fclean all
-
-libft:
-	make -C ./libft
 
 .PHONY: all clean fclean re libft
